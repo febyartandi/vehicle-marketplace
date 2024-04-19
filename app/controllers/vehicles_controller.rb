@@ -69,7 +69,7 @@ class VehiclesController < ApplicationController
   def update
     @vehicle = Vehicle.find(params[:id])
     @vehicle.days = days_list_to_int(params[:vehicle][:days])
-    if @vehicle.update(vehicle_params)
+    if @vehicle.update!(vehicle_params)
      redirect_to @vehicle, notice: "Information updated!"
     else
       render :edit
@@ -83,7 +83,7 @@ class VehiclesController < ApplicationController
   private
 
   def vehicle_params
-    params.require(:vehicle).permit(:user, :title, :description, :price)
+    params.require(:vehicle).permit(:user, :title, :description, :price, { images: [] })
   end
 
 end

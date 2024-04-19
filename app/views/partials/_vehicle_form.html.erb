@@ -6,10 +6,25 @@
   <% dotw = %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday) %>
   <div class="w-75 mt-3">
     <%= simple_form_for [@vehicle] do |f| %>
-      <%# TODO: Add image upload. %>
       <%= f.input :title %>
       <%= f.input :description %>
       <%= f.input :price %>
+      <div id="file-list" class="mb-2 flex">
+        <% @vehicle.images.each do |image| %>
+          <div class="position-relative mr-3 text-center file-preview" style="width: min-content;">
+            <div class="img-thumbnail">
+              <%= image_tag(image.url || 'https://icons.iconarchive.com/icons/zhoolego/material/512/Filetype-Docs-icon.png', height: 100) %>
+              <button style="top: 5px; right: 5px;" class="btn btn-xs btn-danger position-absolute" onclick="$(this).closest('.file-preview').remove()">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+              </button>
+            </div>
+
+            <%= f.hidden_field :images, multiple: true, value: image.cache_name || image.identifier %>
+          </div>
+        <% end %>
+      </div>
+
+      <%= f.file_field :images, multiple: true %>
       <%= f.input :days, as: :check_boxes, collection: dotw, include_hidden: false, label: "Days Available" %>
       <%= f.submit class: "rounded-pill btn btn-primary text-shadow text-white w-100" %>
     <% end %>

@@ -23,16 +23,14 @@
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
       </div>
       <div class="carousel-inner">
-        <div class="carousel-item active">
-          <div class="d-flex justify-content-center">
-            <%= image_tag "exteriors/exterior-#{@listing[:vehicle][:id] % 31}.jpeg", alt: "camping car", class: "d-block", style: "height: 300px;" %>
+        <% @vehicle.images.each_with_index do |image, index| %>
+          <div class="carousel-item <%= 'active' if (index == 0) %>">
+            <div class="d-flex justify-content-center">
+              <%= image_tag image.url, alt: "camping car", class: "d-block", style: "height: 300px;" %>
+            </div>
           </div>
-        </div>
-        <div class="carousel-item">
-          <div class="d-flex justify-content-center">
-            <%= image_tag "interiors/interior-#{@listing[:vehicle][:id] % 31}.jpeg", alt: "camping car", class: "d-block", style: "height: 300px;" %>
-          </div>
-        </div>
+        <% end %>
+        
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
         <span class="carousel-control-prev-icon bg-black rounded-circle" aria-hidden="true"></span>

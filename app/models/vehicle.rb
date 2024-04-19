@@ -10,4 +10,7 @@ class Vehicle < ApplicationRecord
   validates :description, presence: true
   validates :price, presence: true
   validates :days, presence: true
+
+  mount_uploaders :images, ImageUploader
+  #serialize :images, JSON
 end
